@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
-    padding: 1px;
-    border: 1px solid blue;
-    border-style: dashed;
-    height: 100%;
+html,
+body {
+  height: 100%;
+}
+
+.visible-borders {
+  border: 1px solid black;
+  border-radius: 5px;
+  border-style: dashed;
 }

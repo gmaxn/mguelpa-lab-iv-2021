@@ -1,0 +1,27 @@
+<style>
+    :host {
+        height: 100%;
+        display: grid;
+        grid-template-columns: auto 350px auto;
+        grid-template-rows: 75px 650px auto;
+        background-color:rgb(255,255,255);
+    }
+
+    @media only screen and (max-width: 1080px) {
+        :host {
+        }
+    }
+
+    .route-container {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+    }
+
+    app-signin-form {
+        grid-column: 2;
+        grid-row: 2;
+    }
+</style>
+
+<app-signin-form></app-signin-form>

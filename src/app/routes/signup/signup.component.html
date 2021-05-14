@@ -1,0 +1,38 @@
+<style>
+    :host {
+        display: grid;
+        grid-template-rows: 100px 600px auto;
+        grid-template-columns: auto 800px auto;
+    }
+
+    #tab_container {
+        grid-row: 2;
+        grid-column: 2;
+    }
+
+    #header {
+        grid-row: 1;
+        grid-column: 2;
+        margin:auto;
+    }
+</style>
+<h2 id="header">Alta Usuarios - Clinica OMED</h2>
+<div id="tab_container">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pacientes</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Especialistas</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Administradores</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <app-patient-registration-form></app-patient-registration-form>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <app-specialist-registration-form></app-specialist-registration-form>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <app-admin-registration-form></app-admin-registration-form>
+        </div>
+    </div>
+</div>
