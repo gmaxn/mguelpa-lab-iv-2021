@@ -108,3 +108,5 @@
     <input type="submit" class="btn btn-primary" style="margin-top: 10px;"(click)="submit()" value="Registrar">
     <button class="btn btn-primary" style="margin: 10px 0 0 10px;" (click)="auto()">Auto</button>
   </form>
+
+  <app-prompt @prompt *ngIf="prompt" style="z-index: 9000;"></app-prompt>

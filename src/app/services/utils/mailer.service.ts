@@ -1,14 +1,49 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MailerService {
 
-  constructor(private _http: HttpClient) { }
+  private url = 'https://mguelpa-lab-iv-tp-clinica.herokuapp.com/mailer';
+  private countriesUrl = 'https://restcountries.eu/rest/v2';
+
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getCountries(): Observable<any> {
+    console.log("asdfsa");
+    return this.http.get<any>(this.countriesUrl).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
 
   sendMessage(body:any) {
-    return this._http.post('https://mguelpa-lab-iv-tp-clinica.herokuapp.com:8080/mailer', body);
+    return this.http.post(this.url, body).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
+  }
+
+  sendMessage2(body:any) {
+    return this.http.post(this.url, body);
+    }
+
+  private handleError(err: HttpErrorResponse) {
+    let errorMessage = '';
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `An error ocurred: ${err.error.message}`;
+    }
+    else {
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }

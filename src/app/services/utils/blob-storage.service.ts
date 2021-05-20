@@ -13,7 +13,7 @@ export class BlobStorageService {
 
   public async uploadFiles(files: BlobFile[]) {
     return new Promise<any>((resolve, reject) => {
-      if(files.length > 1) {
+      if(files.length > 0) {
         if(files[0]) {
           this.uploadFile(files[0]).then(response1 => {
             if(files[1]) {

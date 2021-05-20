@@ -32,6 +32,10 @@
 
     #mid_bar {
         margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     #btn_nav {
@@ -85,13 +89,17 @@
     <div id="btn_sidenav" class="my_btn">
         <i class="fas fa-bars fa-1x"></i>
     </div>
-    <div id="btn_signin" class="my_btn" (click)="goToSigninPage()">
-        <img src="./../../../../assets/users.png" style="height:20px">
+    <div *ngIf="!logged" id="btn_signin" class="my_btn" (click)="goToSigninPage()" style="width:100px !important;">
+        Login <img src="./../../../../assets/users.png" style="height:20px;">
+    </div>
+    <div *ngIf="logged" id="btn_signin" class="my_btn" (click)="signout()" style="width:100px !important;">
+        Logout <img src="./../../../../assets/users.png" style="height:20px;">
+    </div>
+    <div id="btn_signin" class="my_btn" (click)="goToSignupPage()" style="width:100px !important;">
+        Registro <i class="fas fa-user-plus"></i>
     </div>
     <div id="mid_bar">
-        <!-- <i class="fas fa-user-circle fa-2x" style="margin-bottom: -1px;"></i>
-        <i class="fas fa-user-circle fa-2x" style="margin-bottom: -1px;"></i>
-        <i class="fas fa-user-circle fa-2x" style="margin-bottom: -1px;"></i> -->
+        <p *ngIf="user">Bienvenido {{user?.firstname}} {{user?.lastname}}</p>
     </div>
 
 

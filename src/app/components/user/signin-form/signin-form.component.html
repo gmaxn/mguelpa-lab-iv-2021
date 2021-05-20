@@ -14,7 +14,7 @@
         padding: 50px;
     }
 </style>
-<form id="frm_signin" action="">
+<form id="frm_signin" action="" [formGroup]="form">
 
     <img src="./../../../../assets/logo2.png" style="height: 100px; justify-self: center; margin-bottom: 20px;" alt="">
 
@@ -23,21 +23,30 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="Usuario" aria-label="Username">
+        <input type="text" class="form-control" placeholder="Usuario" aria-label="Username" formControlName="username">
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-        <input type="password" class="form-control" placeholder="Clave" aria-label="Password">
+        <input type="password" class="form-control" placeholder="Clave" aria-label="Password" formControlName="password">
     </div>
 
     <div class="custom-control custom-switch" style="display: flex; align-items: center; margin-bottom: 20px;">
-        <input type="checkbox" class="custom-control-input" id="customSwitch1" style="margin-right: 5px;">
+        <input type="checkbox" class="custom-control-input" style="margin-right: 5px;" (change)="switch()">
         <label class="custom-control-label" for="customSwitch1">Auto completar datos</label>
     </div>
 
-    <input class="btn btn-danger" style="margin-bottom: 20px;" type="submit" value="Ingresar">
+    <div *ngIf="autoCompletarDatos" class="row" style="margin: -10px 0 20px 0;">
+        <button type="button" class="btn btn-outline-secondary btn-sm col-sm-3" style="margin:auto; font-size:9px" (click)="auto('admin')">Admin</button>
+        <button type="button" class="btn btn-outline-success btn-sm col-sm-3" style="margin:auto; font-size:9px" (click)="auto('paciente')">Paciente</button>
+        <button type="button" class="btn btn-outline-info btn-sm col-sm-3" style="margin:auto; font-size:9px" (click)="auto('especialista')">Especialista</button>
+    </div>
+
+    <div class="row">
+        <input class="btn btn-danger col-sm-5" style="margin: 0 5px 20px 5px;" type="submit" value="Ingresar" (click)='signin()'>
+    </div>
 
     <p>¿No estás registrado? <a routerLink="/signup">Ingresa aquí</a>.</p>
+
 
 </form>

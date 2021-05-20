@@ -9,13 +9,20 @@ import { BlobFile } from 'src/app/models/blob-flile';
 import { Patient } from 'src/app/models/profile/patient';
 import { UserRegistrationData } from 'src/app/models/user/user-registration-data';
 import { MailerService } from 'src/app/services/utils/mailer.service';
+import { LoadingEventService } from 'src/app/services/layout/loading-event.service';
+import { keyframes } from '@angular/animations';
+import { promptSlideAnimation } from 'src/app/app-animations.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-registration-form',
+  animations: [promptSlideAnimation],
   templateUrl: './patient-registration-form.component.html',
   styleUrls: ['./patient-registration-form.component.css']
 })
 export class PatientRegistrationFormComponent implements OnInit {
+
+  public prompt = false;
 
   private subscriptions: Subscription[] = [];
 
@@ -41,7 +48,7 @@ export class PatientRegistrationFormComponent implements OnInit {
     age: {
       message: '',
       class: ''
-    }, 
+    },
     username: {
       message: '',
       class: ''
@@ -64,11 +71,11 @@ export class PatientRegistrationFormComponent implements OnInit {
     },
     photo01: {
       message: '',
-      class: '',  
+      class: '',
     },
     photo02: {
       message: '',
-      class: '',  
+      class: '',
     }
   };
 
@@ -85,9 +92,11 @@ export class PatientRegistrationFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private pv: PatientValidationService, 
+    private pv: PatientValidationService,
     private ps: PatientService,
-    private ms: MailerService
+    private ms: MailerService,
+    private _loading: LoadingEventService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -135,13 +144,15 @@ export class PatientRegistrationFormComponent implements OnInit {
   }
 
   submit() {
+
+
     this.controlNames.map(name => {
       const ctrl = this.form.get(name);
       ctrl.markAllAsTouched();
       this.setMessage(ctrl, name)
     });
 
-    if(this.form.status === "VALID") {
+    if (this.form.status === "VALID") {
 
       const profile: UserRegistrationData<Patient> = {
         credentials: {
@@ -167,14 +178,28 @@ export class PatientRegistrationFormComponent implements OnInit {
           }
         }
       }
-      this.ps.registerPatient(profile, this.pictures);
+      this._loading.emitChange(true);
+      this.ps.registerPatient(profile, this.pictures).then(uid => {
 
-      const body = {
-        name: this.form.get('firstname').value,
-        email: this.form.get('email').value,
-        message: 'hola'
-      };
-      this.ms.sendMessage(body);
+            const body = {
+              uid: uid,
+              email: this.form.get('username').value,
+              subject: "Activacion de usuario - Clinica OMED"
+            };
+
+            this.ms.sendMessage(body).subscribe(() => {
+
+        });
+
+      }).finally(() => {
+
+        this._loading.emitChange(false);
+        alert("registro exitoso, revise su email para activar su cuenta.");
+        this.router.navigate(['signin']);
+          
+      });
+
+
     } else {
       //alert('false');
     }
@@ -202,9 +227,9 @@ export class PatientRegistrationFormComponent implements OnInit {
 
   auto() {
 
-    this.form.get('username').patchValue("jdoe@testing.com");
-    this.form.get('passwordGroup.password').patchValue("123456Q!");
-    this.form.get('passwordGroup.confirm').patchValue("123456Q!");
+    this.form.get('username')?.patchValue(`test_${Date.now()}@user.com`);
+    this.form.get('passwordGroup.password')?.patchValue("123456Q!");
+    this.form.get('passwordGroup.confirm')?.patchValue("123456Q!");
 
     this.form.get('firstname').patchValue("John");
     this.form.get('lastname').patchValue("Doe");

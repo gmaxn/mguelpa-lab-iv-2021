@@ -2,22 +2,32 @@ const nodemailer = require('nodemailer');
 
 module.exports = (form) => {
 
+    
+    // var transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: 'mguelpa.clinica.online@gmail.com', // Cambialo por tu email
+    //         pass: 'pfximmoassdafbtr' // Cambialo por tu password
+    //     }
+    // });
+
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // upgrade later with STARTTLS
         auth: {
-            user: 'mguelpa.clinica.online@gmail.com', // Cambialo por tu email
-            pass: 'pfximmoassdafbtr' // Cambialo por tu password
+          user: "mguelpa.clinica.online@gmail.com",
+          pass: "yulstfwmiijnkbzd"
         }
-    });
-
+      });
+    
     const mailOptions = {
-        from: `${form.name} ${form.email}`,
-        to: 'destinatario', // Cambia esta parte por el destinatario
+        from: "mguelpa.clinica.online@gmail.com",
+        to: form.email,
         subject: form.subject,
-        html: ` <strong>Nombre:</strong> ${form.name} <br/>
-                <strong>E-mail:</strong> ${form.email} <br/>
-                <strong>Mensaje:</strong> ${form.message}`};
-
+        html: `<p> Active su usuario haciendo click <a href="https://mguelpa-lab-iv-tp-clinica.herokuapp.com/patients/${form.uid}/activate">aquí.</a></p>`
+    };
+    
     transporter.sendMail(mailOptions, function (err, info) {
         if (err)
             console.log(err)

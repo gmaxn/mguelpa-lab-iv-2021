@@ -20,6 +20,9 @@ import { SignupComponent } from './routes/signup/signup.component';
 import { AdminRegistrationFormComponent } from './components/user/admin-registration-form/admin-registration-form.component';
 import { PatientRegistrationFormComponent } from './components/user/patient-registration-form/patient-registration-form.component';
 import { SpecialistRegistrationFormComponent } from './components/user/specialist-registration-form/specialist-registration-form.component';
+import { SpinnerComponent } from './components/layout/spinner/spinner.component';
+import { PromptComponent } from './components/layout/prompt/prompt.component';
+import { SpecialitySelectorComponent } from './components/shared/speciality-selector/speciality-selector.component';
 
 
 
@@ -34,7 +37,10 @@ import { SpecialistRegistrationFormComponent } from './components/user/specialis
     SignupComponent,
     AdminRegistrationFormComponent,
     PatientRegistrationFormComponent,
-    SpecialistRegistrationFormComponent
+    SpecialistRegistrationFormComponent,
+    SpinnerComponent,
+    PromptComponent,
+    SpecialitySelectorComponent
   ],
   imports: [
     BrowserModule,
