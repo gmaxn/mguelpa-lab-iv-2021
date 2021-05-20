@@ -20,19 +20,29 @@
 <div id="tab_container">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pacientes</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Especialistas</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Administradores</button>
+            <button class="nav-link active" id="nav-patient-tab" data-bs-toggle="tab" data-bs-target="#nav-patient" type="button" role="tab" aria-controls="nav-patient" aria-selected="true">Pacientes</button>
+            <button class="nav-link" id="nav-specialist-tab" data-bs-toggle="tab" data-bs-target="#nav-specialist" type="button" role="tab" aria-controls="nav-specialist" aria-selected="false">Especialistas</button>
+            <button *ngIf="hasRoleAdmin"  class="nav-link" id="nav-admin-tab" data-bs-toggle="tab" data-bs-target="#nav-admin" type="button" role="tab" aria-controls="nav-admin" aria-selected="false">Administradores</button>
+            <button *ngIf="hasRoleAdmin"  class="nav-link" id="nav-manager-tab" data-bs-toggle="tab" data-bs-target="#nav-manager" type="button" role="tab" aria-controls="nav-manager" aria-selected="false">Habiliatacion de usuarios</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+        <div class="tab-pane fade show active" id="nav-patient" role="tabpanel" aria-labelledby="nav-patient-tab">
             <app-patient-registration-form></app-patient-registration-form>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+        <div class="tab-pane fade" id="nav-specialist" role="tabpanel" aria-labelledby="nav-profile-tab">
             <app-specialist-registration-form></app-specialist-registration-form>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        </div>
+      
+        <div class="tab-pane fade" id="nav-admin" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="hasRoleAdmin">
             <app-admin-registration-form></app-admin-registration-form>
         </div>
+
+        <div class="tab-pane fade" id="nav-manager" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="hasRoleAdmin">
+            <app-user-manager></app-user-manager>
+        </div>
+        
     </div>
 </div>

@@ -14,7 +14,7 @@ import { LoggedEventService } from '../layout/logged-event.service';
 })
 export class AuthenticationService {
 
-  private logged = new BehaviorSubject(false);
+  private logged = new BehaviorSubject(this.isLogged());
   logged$ = this.logged.asObservable();
 
   

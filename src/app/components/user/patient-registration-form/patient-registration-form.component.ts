@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ControlStateObject } from 'src/app/models/error-state';
@@ -10,7 +10,6 @@ import { Patient } from 'src/app/models/profile/patient';
 import { UserRegistrationData } from 'src/app/models/user/user-registration-data';
 import { MailerService } from 'src/app/services/utils/mailer.service';
 import { LoadingEventService } from 'src/app/services/layout/loading-event.service';
-import { keyframes } from '@angular/animations';
 import { promptSlideAnimation } from 'src/app/app-animations.module';
 import { Router } from '@angular/router';
 
@@ -194,7 +193,7 @@ export class PatientRegistrationFormComponent implements OnInit {
       }).finally(() => {
 
         this._loading.emitChange(false);
-        alert("registro exitoso, revise su email para activar su cuenta.");
+        alert("Registro exitoso, revise su email para activar su cuenta.");
         this.router.navigate(['signin']);
           
       });

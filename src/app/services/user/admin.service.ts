@@ -1,14 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Speciality } from 'src/app/models/speciality';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 import { BlobFile } from 'src/app/models/blob-flile';
 import { ProfileInformation } from 'src/app/models/profile/profile-information';
-import { Specialist } from 'src/app/models/specialist';
+import { Admin } from 'src/app/models/user/admin';
 import { UserCredentials } from 'src/app/models/user/user-credentials';
 import { UserRegistrationData } from 'src/app/models/user/user-registration-data';
 import { LoggedEventService } from '../layout/logged-event.service';
@@ -17,8 +15,8 @@ import { BlobStorageService } from '../utils/blob-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SpecialistService {
-
+export class AdminService {
+  
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
@@ -27,41 +25,7 @@ export class SpecialistService {
     private logged: LoggedEventService
   ) { }
 
-  public getSpecialities() {
-    return this.db.collection<Speciality>("specialities").valueChanges().pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public getAllUsers() {
-    return this.db.collection<any>("users").valueChanges().pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public updateStatus(uid:string, status:boolean) {
-    return this.db.collection<any>("users")
-    .doc(uid)
-    .update({
-      "claims.isActiveUser": status
-    })
-    .then(
-        ok => {
-            console.log('Usuario activado');
-        },
-        err => {
-            console.log(err);
-        }
-    );
-  }
-
-  public addSpeciality(speciality: Speciality) {
-    return this.db.collection<Speciality>("specialities")
-      	        	.doc(speciality.name)
-                  .set(speciality);
-  }
-
-  public registerSpecialist(registrationData: UserRegistrationData<Specialist>, pictures: BlobFile[]) {
+  public registerAdmin(registrationData: UserRegistrationData<Admin>, pictures: BlobFile[]) {
     return new Promise<string>((resolve, reject) => {
       this.createUserWithEmailAndPassword(registrationData.credentials).then(response => {
         registrationData.profile.claims.uid = response.user!.uid;
@@ -89,7 +53,7 @@ export class SpecialistService {
   private uploadProfilePictures(pictures: BlobFile[]) {
     return this.blob.uploadFiles(pictures);
   }
-  private uploadProfile(profile: ProfileInformation<Specialist>) {
+  private uploadProfile(profile: ProfileInformation<Admin>) {
     const docRef = this.db.collection("users").doc(profile.claims.uid);
     return docRef.set(profile).then(
       res => {
@@ -98,7 +62,6 @@ export class SpecialistService {
       err => this.handleError(err)
     )
   }
-
   private handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {

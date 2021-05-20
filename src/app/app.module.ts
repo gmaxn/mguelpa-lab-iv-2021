@@ -23,6 +23,7 @@ import { SpecialistRegistrationFormComponent } from './components/user/specialis
 import { SpinnerComponent } from './components/layout/spinner/spinner.component';
 import { PromptComponent } from './components/layout/prompt/prompt.component';
 import { SpecialitySelectorComponent } from './components/shared/speciality-selector/speciality-selector.component';
+import { UserManagerComponent } from './components/user/user-manager/user-manager.component';
 
 
 
@@ -40,7 +41,8 @@ import { SpecialitySelectorComponent } from './components/shared/speciality-sele
     SpecialistRegistrationFormComponent,
     SpinnerComponent,
     PromptComponent,
-    SpecialitySelectorComponent
+    SpecialitySelectorComponent,
+    UserManagerComponent
   ],
   imports: [
     BrowserModule,

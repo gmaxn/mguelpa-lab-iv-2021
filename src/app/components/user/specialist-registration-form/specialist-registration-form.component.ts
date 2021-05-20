@@ -175,22 +175,10 @@ export class SpecialistRegistrationFormComponent implements OnInit {
         }
       }
       this._loading.emitChange(true);
-      this.ss.registerSpecialist(profile, this.pictures).then(uid => {
-
-            const body = {
-              uid: uid,
-              email: this.form.get('username').value,
-              subject: "Activacion de usuario - Clinica OMED"
-            };
-
-            this.ms.sendMessage(body).subscribe(() => {
-
-        });
-
-      }).finally(() => {
+      this.ss.registerSpecialist(profile, this.pictures).finally(() => {
 
         this._loading.emitChange(false);
-        alert("registro exitoso, contacte a un administrador para activar su cuenta.");
+        alert("Registro exitoso, contacte a un administrador para activar su cuenta.");
         this.router.navigate(['signin']);
           
       });

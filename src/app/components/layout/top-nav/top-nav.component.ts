@@ -11,8 +11,9 @@ import { AuthenticationService } from 'src/app/services/user/authentication.serv
 })
 export class TopNavComponent implements OnInit {
 
-  public logged = false;
+  public logged:boolean = false;
   public user: UserClaims | any = null;
+
 
   constructor(
     private router: Router, 
@@ -22,25 +23,10 @@ export class TopNavComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.user = <UserClaims>(JSON.parse(localStorage.getItem('userCredentials')!));
-
-    if(this.user) {
-      this.logged = true;
-      console.log(this.logged);
-    } else {
-      this.user = null;
-    }
-
-
-    this.auth.logged$.subscribe(loggedin => {
-      if(loggedin) {
-        this.user = <UserClaims>(JSON.parse(localStorage.getItem('userCredentials')!));
-        this.logged = true;
-      } else {
-        this.logged = false;
-        this.user = null;
-      }
-    })
+    this.auth.logged$.subscribe(logged => {
+      this.logged = logged;
+      this.user = JSON.parse(localStorage.getItem('userCredentials')!);
+    });
   }
 
   goToSigninPage() {
