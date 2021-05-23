@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-side-nav',
@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideNavComponent implements OnInit {
 
-  constructor() { }
+  @HostListener('click', ['$event'])
+  documentClick(event: any): void {
+    let input: HTMLElement = (event.target as HTMLElement);
+
+    if(input === this.elRef.nativeElement) {
+      this.closeNav.emit(false);
+    }
+  }
+
+  @Output() closeNav: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor(
+    private elRef: ElementRef
+  ) { }
 
   ngOnInit(): void {
+    
   }
 
 }

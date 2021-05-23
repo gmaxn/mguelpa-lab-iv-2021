@@ -99,6 +99,15 @@
         </div>
       </div>
     </div>
+    <div class="form-group row">
+      <div class="col-md-6" style="display: flex; flex-direction: column;">
+        <label class="form-label">Captcha:</label>
+        <app-custom-captcha class="is-invalid" (captchaValidation)="captchaValidation($event)"></app-custom-captcha>
+        <div *ngIf="submitted && !isValidCaptcha" [ngClass]="{'invalid-feedback': submitted && !isValidCaptcha}">
+          Debe pasar la validacion del captcha.
+        </div>
+      </div> 
+    </div>
     <input type="submit" class="btn btn-primary" style="margin-top: 10px;"(click)="submit()" value="Registrar">
     <button class="btn btn-primary" style="margin: 10px 0 0 10px;" (click)="auto()">Auto</button>
   </form>

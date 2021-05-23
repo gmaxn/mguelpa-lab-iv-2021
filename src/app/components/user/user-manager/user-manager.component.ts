@@ -33,43 +33,4 @@ export class UserManagerComponent implements OnInit {
 
     this.ss.updateStatus(uid, status);
   }
-
-  // eventCheck(event:any) {
-
-  //   //console.log(event.target.checked);
-
-  //   let userId = event.target.id
-  //   let privilegeId;
-  //   switch(event.target.name)
-  //   {
-  //     case "Admin": 
-  //     privilegeId = 1;
-  //     break;
-  //     case "User":
-  //     privilegeId = 11;
-  //     break;
-  //     case "Employee":
-  //     privilegeId = 21;
-  //     break;
-  //   }
-  //   let status = event.target.checked ? 1 : 0;
-  
-
-  
-  //   this.userService.updatePrivileges(userId, privilegeId, status).subscribe(
-  //     () => {
-  //       //this.router.navigate(['/home']);
-  //     },
-  //     (error) => {
-  //       // this.showAddError = true;
-  //       console.log(error);
-  //     }
-  //   );
-
-  // }
-
-  // onSubmit() {
-
-  // }
-
 }

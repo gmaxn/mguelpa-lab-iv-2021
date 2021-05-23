@@ -20,27 +20,27 @@
 <div id="tab_container">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-patient-tab" data-bs-toggle="tab" data-bs-target="#nav-patient" type="button" role="tab" aria-controls="nav-patient" aria-selected="true">Pacientes</button>
-            <button class="nav-link" id="nav-specialist-tab" data-bs-toggle="tab" data-bs-target="#nav-specialist" type="button" role="tab" aria-controls="nav-specialist" aria-selected="false">Especialistas</button>
-            <button *ngIf="hasRoleAdmin"  class="nav-link" id="nav-admin-tab" data-bs-toggle="tab" data-bs-target="#nav-admin" type="button" role="tab" aria-controls="nav-admin" aria-selected="false">Administradores</button>
+            <button id="tab_patient" *ngIf="mode === 'patient' || hasRoleAdmin" class="nav-link" [ngClass]="{'active' : mode === 'patient'}" id="nav-patient-tab" data-bs-toggle="tab" data-bs-target="#nav-patient" type="button" role="tab" aria-controls="nav-patient" aria-selected="false">Pacientes</button>
+            <button id="tab_specialist" *ngIf="mode === 'specialist' || hasRoleAdmin" class="nav-link" [ngClass]="{'active' : mode === 'specialist'}" id="nav-specialist-tab" data-bs-toggle="tab" data-bs-target="#nav-specialist" type="button" role="tab" aria-controls="nav-specialist" aria-selected="true">Especialistas</button>
+            <button *ngIf="hasRoleAdmin"  class="nav-link" id="nav-admin-tab" data-bs-toggle="tab" data-bs-target="#nav-admin" type="button" role="tab" aria-controls="nav-admin" aria-selected="hasRoleAdmin">Administradores</button>
             <button *ngIf="hasRoleAdmin"  class="nav-link" id="nav-manager-tab" data-bs-toggle="tab" data-bs-target="#nav-manager" type="button" role="tab" aria-controls="nav-manager" aria-selected="false">Habiliatacion de usuarios</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
 
-        <div class="tab-pane fade show active" id="nav-patient" role="tabpanel" aria-labelledby="nav-patient-tab">
+        <div *ngIf="mode === 'patient' || hasRoleAdmin" class="tab-pane fade" [ngClass]="{'show active' : mode === 'patient'}" id="nav-patient" role="tabpanel" aria-labelledby="nav-patient-tab">
             <app-patient-registration-form></app-patient-registration-form>
         </div>
 
-        <div class="tab-pane fade" id="nav-specialist" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div *ngIf="mode === 'specialist' || hasRoleAdmin" class="tab-pane fade" [ngClass]="{'show active': mode === 'specialist'}" id="nav-specialist" role="tabpanel" aria-labelledby="nav-specialist-tab">
             <app-specialist-registration-form></app-specialist-registration-form>
         </div>
       
-        <div class="tab-pane fade" id="nav-admin" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="hasRoleAdmin">
+        <div *ngIf="hasRoleAdmin" class="tab-pane fade" id="nav-admin" role="tabpanel" aria-labelledby="nav-profile-tab">
             <app-admin-registration-form></app-admin-registration-form>
         </div>
 
-        <div class="tab-pane fade" id="nav-manager" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="hasRoleAdmin">
+        <div *ngIf="hasRoleAdmin" class="tab-pane fade" id="nav-manager" role="tabpanel" aria-labelledby="nav-profile-tab">
             <app-user-manager></app-user-manager>
         </div>
         

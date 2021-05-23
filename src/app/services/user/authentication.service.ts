@@ -45,34 +45,9 @@ export class AuthenticationService {
     });
   }
 
-  // public async signUp(user: User) {
-  //   return new Promise<any>((resolve, reject) => {
-
-  //     this.auth.createUserWithEmailAndPassword(user.credentials.username, user.credentials.password).then(response => {
-  //       // 1. persist profile info
-  //       this.db.collection<any>("users").doc(response.user?.uid).set(user.toProfile(response.user?.uid)).then(() => {
-  //         // 2. get last inserted user
-  //         this.db.collection<any>("users").doc(response.user?.uid).valueChanges().subscribe(data => {
-  //           // 3. set local storage
-  //           const credentials = {
-  //             uid: data.uid,
-  //             firstname: data.firstname,
-  //             lastname: data.lastname,
-  //             username: data.email,
-  //             roles: data.roles
-  //           };
-  //           localStorage.setItem('userCredentials', JSON.stringify(credentials));
-  //           this.logged.next(true);
-  //           resolve(credentials)
-  //         });
-  //       });
-  //     }).catch(error => reject(error));
-
-  //   });
-  // }
-
   public async signOut() {
     localStorage.removeItem('userCredentials');
+    localStorage.clear();
     this.logged.next(false);
     //this.auth.signOut();
     this.router.navigate(['/home']);
@@ -87,6 +62,12 @@ export class AuthenticationService {
     const item = localStorage.getItem('userCredentials');
     const user = !item ? item : JSON.parse(item);
     return user?.email;
+  }
+
+  public getCurrentUserCredentials() {
+    const item = localStorage.getItem('userCredentials');
+    const user = !item ? item : JSON.parse(item);
+    return user;
   }
 
   private handleError(err: HttpErrorResponse) {

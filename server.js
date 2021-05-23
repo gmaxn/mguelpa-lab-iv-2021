@@ -24,9 +24,9 @@ app.post('/mailer', (req, res) => {
     res.status(200).send();
 });
 
-app.get('/patients/:id/activate', (req, res) => {
+app.get('/patient/:id/activate', (req, res) => {
     const uid = req.params.id;
-    firestore.collection('patients')
+    firestore.collection('users')
     .doc(uid)
     .update("claims.isActiveUser", true)
     .then(

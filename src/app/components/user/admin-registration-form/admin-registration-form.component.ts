@@ -8,7 +8,6 @@ import { BlobFile } from 'src/app/models/blob-flile';
 import { UserRegistrationData } from 'src/app/models/user/user-registration-data';
 import { MailerService } from 'src/app/services/utils/mailer.service';
 import { LoadingEventService } from 'src/app/services/layout/loading-event.service';
-import { promptSlideAnimation } from 'src/app/app-animations.module';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/user/admin.service';
 import { Admin } from 'src/app/models/user/admin';
@@ -19,6 +18,10 @@ import { Admin } from 'src/app/models/user/admin';
   styleUrls: ['./admin-registration-form.component.css']
 })
 export class AdminRegistrationFormComponent implements OnInit {
+
+  public isValidCaptcha = false;
+
+  public submitted = false;
 
   public prompt = false;
 
@@ -132,6 +135,12 @@ export class AdminRegistrationFormComponent implements OnInit {
     });
   }
 
+  captchaValidation(input:boolean) {
+
+    this.isValidCaptcha = input;
+
+  }
+
   check(name: string) {
     const ctrl = this.form.get(name)
     if (ctrl.errors && (ctrl.touched || ctrl.dirty)) {
@@ -141,6 +150,7 @@ export class AdminRegistrationFormComponent implements OnInit {
 
   submit() {
 
+    this.submitted = true;
 
     this.controlNames.map(name => {
       const ctrl = this.form.get(name);
@@ -148,7 +158,7 @@ export class AdminRegistrationFormComponent implements OnInit {
       this.setMessage(ctrl, name)
     });
 
-    if (this.form.status === "VALID") {
+    if (this.form.status === "VALID" && this.isValidCaptcha) {
 
       const profile: UserRegistrationData<Admin> = {
         credentials: {

@@ -86,9 +86,10 @@
 
 <div id="nav">
 
-    <div id="btn_sidenav" class="my_btn">
+    <div id="btn_sidenav" class="my_btn" (click)="showSideNav()" *ngIf="logged" >
         <i class="fas fa-bars fa-1x"></i>
     </div>
+
     <div *ngIf="!logged" id="btn_signin" class="my_btn" (click)="goToSigninPage()" style="width:100px !important;">
         Login <img src="./../../../../assets/users.png" style="height:20px;">
     </div>
@@ -99,7 +100,7 @@
         Registro <i class="fas fa-user-plus"></i>
     </div>
     <div id="mid_bar">
-        <p *ngIf="user">Bienvenido {{user?.firstname}} {{user?.lastname}}</p>
+        <p style="margin:auto" *ngIf="user">Bienvenido {{user?.firstname}} {{user?.lastname}}</p>
     </div>
 
 

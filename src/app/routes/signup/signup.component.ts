@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserClaims } from 'src/app/models/user/user-claims';
+import { RouteNameEventService } from 'src/app/services/layout/route-name-event.service';
 import { AuthenticationService } from 'src/app/services/user/authentication.service';
 
 @Component({
@@ -15,15 +16,17 @@ export class SignupComponent implements OnInit {
 
   public hasRoleAdmin: boolean = false;
 
+  public mode = '';
+
   constructor(
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private routeName: RouteNameEventService
   ) { }
 
   ngOnInit(): void {
 
     this.user = (JSON.parse(localStorage.getItem('userCredentials')!));
-    console.log(this.user);
-  
+
     if (this.user) {
       this.logged = true;
     } else {
@@ -40,5 +43,11 @@ export class SignupComponent implements OnInit {
         this.user = null;
       }
     })
+
+    this.routeName.changeEmitted$.subscribe(
+      value => {
+        this.mode = value;
+        console.log(document.getElementById('tab_specialist'));
+      });
   }
 }

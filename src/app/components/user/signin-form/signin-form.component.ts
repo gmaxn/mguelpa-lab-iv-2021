@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UserCredentials } from 'src/app/models/user/user-credentials';
 import { LoadingEventService } from 'src/app/services/layout/loading-event.service';
 import { LoggedEventService } from 'src/app/services/layout/logged-event.service';
@@ -13,8 +14,12 @@ import { AuthenticationService } from 'src/app/services/user/authentication.serv
 })
 export class SigninFormComponent implements OnInit {
 
-  public autoCompletarDatos = false;
+  @Output() public autoCompletarDatos: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public autoCompletar: boolean = false;
   public form: FormGroup | any;
+
+  @Input() public mode: Observable<string> | any;
+
 
   constructor(
     private router: Router,
@@ -26,6 +31,13 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.initForm();
+    if (this.mode && this.mode instanceof Observable) {
+      this.mode.subscribe(
+        value => {
+          this.auto(value);
+        });
+    }
+
   }
 
   initForm() {
@@ -37,7 +49,11 @@ export class SigninFormComponent implements OnInit {
   }
 
   switch() {
-    this.autoCompletarDatos = !this.autoCompletarDatos;
+    this.autoCompletar = !this.autoCompletar;
+    if(!this.autoCompletar) {
+      this.form.reset();
+    }
+    this.autoCompletarDatos.emit(this.autoCompletar);
   }
 
   signin() {
@@ -60,18 +76,26 @@ export class SigninFormComponent implements OnInit {
     ).finally(() => { this._loading.emitChange(false) });
   }
 
-  auto(role:string) {
-    switch(role) {
+  auto(role: string) {
+    switch (role) {
       case 'admin':
         this.form.get('username')?.patchValue(`admin@user.com`);
         this.form.get('password')?.patchValue("123456Q!");
         break;
-      case 'especialista':
-        this.form.get('username')?.patchValue(`especialista@user.com`);
+      case 'patient-1':
+        this.form.get('username')?.patchValue(`paciente-1@user.com`);
         this.form.get('password')?.patchValue("123456Q!");
         break;
-      case 'paciente':
-        this.form.get('username')?.patchValue(`paciente@user.com`);
+      case 'patient-2':
+        this.form.get('username')?.patchValue(`paciente-2@user.com`);
+        this.form.get('password')?.patchValue("123456Q!");
+        break;
+      case 'specialist-1':
+        this.form.get('username')?.patchValue(`especialista-1@user.com`);
+        this.form.get('password')?.patchValue("123456Q!");
+        break;
+      case 'specialist-2':
+        this.form.get('username')?.patchValue(`especialista-2@user.com`);
         this.form.get('password')?.patchValue("123456Q!");
         break;
     }

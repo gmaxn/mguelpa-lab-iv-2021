@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable, ObservableLike, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -11,8 +12,13 @@ export class SigninComponent implements OnInit{
     show: false
   };
   public message:string = '';
+  public autoCompletarDatos:boolean = false;
+  private mode: Subject<string> = new Subject<string>();
+  public mode$: Observable<string> = this.mode.asObservable();
 
-  constructor() { }
+  constructor() { 
+  }
+
 
   ngOnInit(): void {
   }
@@ -25,5 +31,14 @@ export class SigninComponent implements OnInit{
 
   onResponse(response:any) {
     this.prompt = response;
+  }
+
+  onAutoCompletarDatos(value:boolean) {
+    this.autoCompletarDatos = value;
+  }
+
+  user(mode:string) {
+    console.log(this.mode);
+    this.mode.next(mode);
   }
 }

@@ -19,6 +19,10 @@ import { SpecialistService } from 'src/app/services/specialist/specialist.servic
 })
 export class SpecialistRegistrationFormComponent implements OnInit {
 
+  public isValidCaptcha = false;
+
+  public submitted = false;
+
   public prompt = false;
 
   private subscriptions: Subscription[] = [];
@@ -101,6 +105,12 @@ export class SpecialistRegistrationFormComponent implements OnInit {
     this.watchForm(...this.controlNames);
   }
 
+  captchaValidation(input:boolean) {
+
+    this.isValidCaptcha = input;
+
+  }
+
   initForm() {
     // Profile Info Form Initialization
     return this.fb.group({
@@ -141,6 +151,7 @@ export class SpecialistRegistrationFormComponent implements OnInit {
 
   submit() {
 
+    this.submitted = true;
 
     this.controlNames.map(name => {
       const ctrl = this.form.get(name);
@@ -148,7 +159,7 @@ export class SpecialistRegistrationFormComponent implements OnInit {
       this.setMessage(ctrl, name)
     });
 
-    if (this.form.status === "VALID") {
+    if (this.form.status === "VALID" && this.isValidCaptcha) {
 
       const profile: UserRegistrationData<Specialist> = {
         credentials: {

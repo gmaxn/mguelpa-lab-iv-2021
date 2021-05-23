@@ -31,6 +31,10 @@ export class PatientRegistrationFormComponent implements OnInit {
 
   private pictures: BlobFile[] = [];
 
+  public isValidCaptcha = false;
+
+  public submitted = false;
+
   public states: ControlStateObject = {
     firstname: {
       message: '',
@@ -142,8 +146,15 @@ export class PatientRegistrationFormComponent implements OnInit {
     }
   }
 
+  captchaValidation(input:boolean) {
+
+    this.isValidCaptcha = input;
+
+  }
+
   submit() {
 
+    this.submitted = true;
 
     this.controlNames.map(name => {
       const ctrl = this.form.get(name);
@@ -151,7 +162,7 @@ export class PatientRegistrationFormComponent implements OnInit {
       this.setMessage(ctrl, name)
     });
 
-    if (this.form.status === "VALID") {
+    if (this.form.status === "VALID" && this.isValidCaptcha) {
 
       const profile: UserRegistrationData<Patient> = {
         credentials: {

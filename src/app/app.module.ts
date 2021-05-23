@@ -24,6 +24,9 @@ import { SpinnerComponent } from './components/layout/spinner/spinner.component'
 import { PromptComponent } from './components/layout/prompt/prompt.component';
 import { SpecialitySelectorComponent } from './components/shared/speciality-selector/speciality-selector.component';
 import { UserManagerComponent } from './components/user/user-manager/user-manager.component';
+import { EnrollmentComponent } from './routes/enrollment/enrollment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppSharedModule } from './app-shared.module';
 
 
 
@@ -42,7 +45,8 @@ import { UserManagerComponent } from './components/user/user-manager/user-manage
     SpinnerComponent,
     PromptComponent,
     SpecialitySelectorComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    EnrollmentComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,8 @@ import { UserManagerComponent } from './components/user/user-manager/user-manage
     AngularFireStorageModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AppSharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

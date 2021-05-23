@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserClaims } from 'src/app/models/user/user-claims';
 import { TopNavService } from 'src/app/services/layout/top-nav.service';
@@ -11,12 +11,15 @@ import { AuthenticationService } from 'src/app/services/user/authentication.serv
 })
 export class TopNavComponent implements OnInit {
 
-  public logged:boolean = false;
+  @Input() public isOpen = false;
+  public logged: boolean = false;
   public user: UserClaims | any = null;
+
+  @Output() enableSideNav: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private eventService: TopNavService,
     private auth: AuthenticationService
   ) { }
@@ -25,7 +28,12 @@ export class TopNavComponent implements OnInit {
 
     this.auth.logged$.subscribe(logged => {
       this.logged = logged;
-      this.user = JSON.parse(localStorage.getItem('userCredentials')!);
+      if (logged) {
+        this.user = JSON.parse(localStorage.getItem('userCredentials')!);
+      } else {
+        localStorage.clear();
+        this.user = null;
+      }
     });
   }
 
@@ -35,11 +43,17 @@ export class TopNavComponent implements OnInit {
   }
 
   goToSignupPage() {
-    this.router.navigate(['signup']);
+    this.router.navigate(['enrollment']);
     this.eventService.hide(false)
   }
 
-  signout(){
+  showSideNav() {
+    this.enableSideNav.emit(!this.isOpen);
+    this.isOpen = !this.isOpen;
+
+  }
+
+  signout() {
     this.auth.signOut();
   }
 }

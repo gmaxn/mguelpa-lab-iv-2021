@@ -1,0 +1,37 @@
+<style>
+    #captcha {
+        display: grid;
+        grid-template-columns: 5px auto 5px auto 5px;
+        grid-template-rows: 5px auto 5px auto 5px;
+    }
+
+    #one {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    #two {
+        grid-column: 2 / span 3;
+        grid-row: 4;
+    }
+
+    #three {
+        grid-column: 4;
+        grid-row: 2;
+    }
+
+    #four {
+        grid-column: 4;
+        grid-row: 4;
+    }
+</style>
+
+<div id="captcha" style="border:1px solid rgb(208, 208, 208); border-radius: 5px;">
+
+    <input id="one" type="text" name="" class="form-control" [ngClass]="{'is-valid' : valid}" [(ngModel)]="input" (keyup)="validateCaptcha()">
+
+    <img id="two" style="height: 80px;" [src]="src" alt="">
+
+    <button id="three" class="btn btn-outline-info" (click)="refreshCaptcha()"><i class="fas fa-sync-alt"></i></button>
+</div>
+

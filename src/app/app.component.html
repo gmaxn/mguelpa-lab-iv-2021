@@ -13,7 +13,8 @@
 </style>
 
 <app-spinner *ngIf="loading"></app-spinner>
-<app-top-nav *ngIf="showTopNav"></app-top-nav>
-<div id="container">
-    <router-outlet></router-outlet>
+<app-top-nav (enableSideNav)="onEnableSideNav($event)" [isOpen]="isOpen"></app-top-nav>
+<app-side-nav @openClose (closeNav)="onEnableSideNav($event)" *ngIf="enableSideNav"></app-side-nav>
+<div id="container" [@routeAnimations]="prepareRoute(o)">
+    <router-outlet #o="outlet" (deactivate)='onDeactivate($event)'></router-outlet>
 </div>
