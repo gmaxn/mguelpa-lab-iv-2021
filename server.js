@@ -14,9 +14,7 @@ app.use(cors())
 
 app.listen(process.env.PORT || 8080);
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/angularapp/index.html'));
-});
+
 
 app.post('/mailer', (req, res) => {
     console.log(req.body);
@@ -37,6 +35,10 @@ app.get('/patient/:id/activate', (req, res) => {
             res.status(400).send(err);
         }
     );
+});
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/angularapp/index.html'));
 });
 
 console.log('Build successful!!');
